@@ -47,7 +47,7 @@ function searchMeal(e) {
 }
 
 // fetch meal by ID
-function getMealById(mealId) {
+function getMealById(mealID) {
   fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealID}`)
     .then((res) => res.json())
     .then((data) => {
@@ -62,9 +62,9 @@ function addMealToDOM(meal) {
   const ingredients = [];
 
   for (let i = 1; i <= 20; i++) {
-    if (meal[`strIndgredient${i}`]) {
+    if (meal[`strIngredient${i}`]) {
       ingredients.push(
-        `${meal[`strIndgredient${i}`]} - ${meal[`strMeasure${i}`]}`
+        `${meal[`strIngredient${i}`]} - ${meal[`strMeasure${i}`]}`
       );
     } else {
       break;
@@ -73,10 +73,18 @@ function addMealToDOM(meal) {
   single_mealEl.innerHTML = `
   <div class="single-meal">
     <h1>${meal.str}</h1>
-    <img src=${meal.strMealThumb}" = alt="${meal.strMeal}" />
+    <img src="${meal.strMealThumb}" = alt="${meal.strMeal}" />
     <div class="single-meal-info">
       ${meal.strCategory ? `<p>${meal.strCategory}</p>` : ""}
       ${meal.strArea ? `<p>${meal.strArea}</p>` : ""}
+      </div>
+      <div class="main">
+      <p>${meal.strInstructions}</p>
+      <h2>Ingredients</h2>
+      <ul>
+      ${ingredients.map((ing) => `<li>${ing}</li>`).join("")}
+      </uL>
+      </div>
     </div>
   `;
 }
