@@ -27,7 +27,7 @@ function searchMeal(e) {
           mealsEL.innerHTML = data.meals
             .map(
               (meal) => `
-            <div class='meal'>
+            <div class="meal">
             <img src="${meal.strMealThumb}" alt=${meal.strMeal}">
             <div class="meal-info" data-mealID="${meal.idMeal}"> 
             <h3>${meal.strMeal}</h3>
@@ -51,6 +51,20 @@ function getMealById(mealID) {
     .then((res) => res.json())
     .then((data) => {
       const meal = data.meals[0];
+
+      addMealToDOM(meal);
+    });
+}
+
+//get meal by id
+function randomMeal() {
+  // clear meal and heading
+  mealsEL.innerHTML = "";
+  resultHeading.innerHTML = "";
+  fetch("https://www.themealdb.com/api/json/v1/1/random.php")
+    .then((res) => res.json())
+    .then((data) => {
+      const meal = data.meal[0];
 
       addMealToDOM(meal);
     });
@@ -90,6 +104,7 @@ function addMealToDOM(meal) {
 
 //event listeners
 submit.addEventListener("submit", searchMeal);
+random.addEventListener("click", randomMeal);
 
 mealsEL.addEventListener("click", (e) => {
   const mealInfo = e.path.find((item) => {
